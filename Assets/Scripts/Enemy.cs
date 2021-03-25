@@ -6,6 +6,9 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 4f;
+
+    public GameObject spawnManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,21 +27,23 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag=="Player")
+        if (other.CompareTag("Player"))
         {
             Player player = other.transform.GetComponent<Player>();
-            if(player!=null) 
-            { 
+            if (player != null)
+            {
                 player.Damage();
             }
             Destroy(this.gameObject);
         }
-        else if(other.tag == "Laser")
+        else if (other.CompareTag("Laser"))
         {
             Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
     }
+
+  
 }

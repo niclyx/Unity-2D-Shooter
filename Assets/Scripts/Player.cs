@@ -11,16 +11,23 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
-    private Vector3 _laserOffset = new Vector3(0, 0.8f, 0);
+    private Vector3 _laserOffset = new Vector3(0, 1f, 0);
     [SerializeField]
     private float _rateOfFire = 0.1f;
     private float _canFire = -1f;
 
     private float yMax = 6f;
     private float yMin = -4f;
+
+    private SpawnManager _spawnManager;
  
     void Start()
     {
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        if(_spawnManager == null)
+        {
+            Debug.LogError("Spawn Manager is NULL.");
+        }
         transform.position = new Vector3(0, -3, 0);
     }
 
@@ -29,8 +36,8 @@ public class Player : MonoBehaviour
         CalculateMovement();
 
         if(Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
-        {
-            FireLaser();
+                {
+                FireLaser();
         }
     }
 
@@ -65,6 +72,10 @@ public class Player : MonoBehaviour
     {
         _lives--;
         if (_lives < 1)
+        {
+            _spawnManager.PlayerDied();
             Destroy(this.gameObject);
+        }
+            
     }
 }
