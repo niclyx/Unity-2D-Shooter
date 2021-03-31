@@ -7,8 +7,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4f;
 
-    public GameObject spawnManager;
-
     // Start is called before the first frame update
     void Start()
     {

@@ -74,5 +74,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ef9837c027ae24ab168586826f23ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 5721729778919741853, guid: da4787e4d9cc0cb41889491174a56e45, type: 3}
+  _enemyPrefab: {fileID: 8068206100163772879, guid: da4787e4d9cc0cb41889491174a56e45, type: 3}
+  _tripleShotPowerupPrefab: {fileID: 6400724912754272374, guid: ac9fea1419c059b4a87ba27e174c5ec5, type: 3}
   _enemyContainer: {fileID: 2457237841359948922}
+  _spawnRate: 3
+  startSpawn: 1
