@@ -445,7 +445,7 @@ Animator:
   m_GameObject: {fileID: 217603890}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0dbc10b292c8c2a4e8c0b82e98564a0c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 930a2a5ce067a524bb2083aa3e05aa93, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1258,7 +1258,7 @@ Animator:
   m_GameObject: {fileID: 1527995958}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0dbc10b292c8c2a4e8c0b82e98564a0c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 930a2a5ce067a524bb2083aa3e05aa93, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1545,7 +1545,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2097732661
 GameObject:
@@ -1758,6 +1758,30 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1440343042, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440343042, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440343042, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440343042, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440343042, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440343042, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1883844455
+      objectReference: {fileID: 0}
     - target: {fileID: 2515536086155343113, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
       propertyPath: _fireLaserClip
       value: 
@@ -1946,7 +1970,7 @@ PrefabInstance:
       objectReference: {fileID: 5801656304384783505, guid: 3a5aa510923a3e649a94f35d3410bcda, type: 3}
     - target: {fileID: 6163745550896909977, guid: edceb865730703843beba855b5d2dffc, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6163745550896909977, guid: edceb865730703843beba855b5d2dffc, type: 3}
       propertyPath: m_LocalPosition.x

@@ -39,6 +39,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3866217778725445883}
     m_Modifications:
+    - target: {fileID: 2480458452248727150, guid: 74eebf70b8bb57747b844eef1c522f83, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480458452248727150, guid: 74eebf70b8bb57747b844eef1c522f83, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1883844455
+      objectReference: {fileID: 0}
     - target: {fileID: 3187571712334144667, guid: 74eebf70b8bb57747b844eef1c522f83, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -87,6 +95,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_laser_left
       objectReference: {fileID: 0}
+    - target: {fileID: 3323301896288579573, guid: 74eebf70b8bb57747b844eef1c522f83, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74eebf70b8bb57747b844eef1c522f83, type: 3}
 --- !u!4 &4339311160212381554 stripped
@@ -101,6 +113,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3866217778725445883}
     m_Modifications:
+    - target: {fileID: 2480458452248727150, guid: 74eebf70b8bb57747b844eef1c522f83, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480458452248727150, guid: 74eebf70b8bb57747b844eef1c522f83, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1883844455
+      objectReference: {fileID: 0}
     - target: {fileID: 3187571712334144667, guid: 74eebf70b8bb57747b844eef1c522f83, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -148,6 +168,10 @@ PrefabInstance:
     - target: {fileID: 3323301896288579573, guid: 74eebf70b8bb57747b844eef1c522f83, type: 3}
       propertyPath: m_Name
       value: Enemy_laser_right
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323301896288579573, guid: 74eebf70b8bb57747b844eef1c522f83, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74eebf70b8bb57747b844eef1c522f83, type: 3}

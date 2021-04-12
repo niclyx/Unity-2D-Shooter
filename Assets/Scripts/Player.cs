@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _rateOfFire = 0.1f;
     private float _canFire = -1f;
+    private int _shieldsLeft;
 
     private float yMax = 6f;
     private float yMin = -4f;
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
     private AudioManager _audioManager;
 
+    private SpriteRenderer _shieldSprite;
     private AudioSource _audio;
 
     
@@ -61,6 +63,11 @@ public class Player : MonoBehaviour
         if (_audioManager == null)
         {
             Debug.LogError("Audio Manager is NULL.");
+        }
+        _shieldSprite = _shieldVisual.GetComponent<SpriteRenderer>();
+        if(_shieldSprite == null)
+        {
+            Debug.LogError("Shield sprite renderer is NULL");
         }
         _audio = GetComponent<AudioSource>();
         if (_audio == null)
@@ -139,10 +146,28 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        //Phase 1:Framework -- Shield Strength
         if(_isShieldPowerupActive)
         {
-            _isShieldPowerupActive = false;
-            _shieldVisual.SetActive(false);
+            _shieldsLeft--;
+            switch (_shieldsLeft)
+            {
+                case 2:
+                    Debug.Log("2 shields left");
+                    _shieldSprite.color = new Color(1f, 1f, 1f, 0.7f);
+                    break;
+                case 1:
+                    Debug.Log("1 shields left");
+                    _shieldSprite.color = new Color(1f, 1f, 1f, 0.4f);
+                    break;
+                case 0:
+                    _isShieldPowerupActive = false;
+                    _shieldVisual.SetActive(false);
+                    break;
+                default:
+                    Debug.Log("DEFAULT");
+                    break;
+            }
             return;
         }
 
@@ -195,6 +220,8 @@ public class Player : MonoBehaviour
     public void ShieldPowerupActivate()
     {
         playPowerupPickupClip();
+        _shieldSprite.color = new Color(1f, 1f, 1f, 1f);
+        _shieldsLeft = 3;
         _isShieldPowerupActive = true;
         _shieldVisual.SetActive(true);
     }

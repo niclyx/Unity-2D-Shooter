@@ -77,6 +77,7 @@ public class Enemy : MonoBehaviour
             _animator.SetTrigger("OnEnemyDeath");
             _audioManager.PlayExplosion();
             _speed = 0;
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.4f);
         }
         else if (other.CompareTag("Laser"))
