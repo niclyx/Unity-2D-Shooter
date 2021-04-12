@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     private float _rateOfFire = 0.1f;
     private float _canFire = -1f;
     private int _shieldsLeft;
+    private int _ammo = 15;
 
     private float yMax = 6f;
     private float yMin = -4f;
@@ -86,7 +87,7 @@ public class Player : MonoBehaviour
     {
         CalculateMovement();
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammo > 0)
         {
             FireLaser();
         }
@@ -142,6 +143,9 @@ public class Player : MonoBehaviour
             _audio.clip = _fireLaserClip;
         }
         _audio.Play();
+
+        _ammo--;
+        _uiManager.UpdateAmmo(_ammo);
     }
 
     public void Damage()
