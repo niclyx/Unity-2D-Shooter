@@ -95,6 +95,13 @@ public class Player : MonoBehaviour
         {
             transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
         }
+
+        //Phase I:Framework - Thrusters
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            transform.Translate(direction * (_speed + 5f) * Time.deltaTime);
+        }
+
         transform.Translate(direction * _speed * Time.deltaTime);
 
         /// Movement restrictions/special
