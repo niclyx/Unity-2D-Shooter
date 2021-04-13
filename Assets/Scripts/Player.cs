@@ -230,6 +230,13 @@ public class Player : MonoBehaviour
         _shieldVisual.SetActive(true);
     }
 
+    public void RefillAmmo()
+    {
+        playPowerupPickupClip();
+        _ammo = 15;
+        _uiManager.UpdateAmmo(_ammo);
+    }
+
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5f);

@@ -2017,6 +2017,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
+      propertyPath: _powerupsArray.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: _powerupsArr.Array.data[0]
       value: 
       objectReference: {fileID: 6400724912754272374, guid: ac9fea1419c059b4a87ba27e174c5ec5, type: 3}
@@ -2028,6 +2032,26 @@ PrefabInstance:
       propertyPath: _powerupsArr.Array.data[2]
       value: 
       objectReference: {fileID: 2856137807138462716, guid: 03dc74ee1dbf47c449bc75750c8167cf, type: 3}
+    - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
+      propertyPath: _collectibleArray.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
+      propertyPath: _powerupsArray.Array.data[0]
+      value: 
+      objectReference: {fileID: 6400724912754272374, guid: ac9fea1419c059b4a87ba27e174c5ec5, type: 3}
+    - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
+      propertyPath: _powerupsArray.Array.data[1]
+      value: 
+      objectReference: {fileID: 1945169279270852007, guid: 49b273b11a00e0447b2a038b5aa60590, type: 3}
+    - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
+      propertyPath: _powerupsArray.Array.data[2]
+      value: 
+      objectReference: {fileID: 2856137807138462716, guid: 03dc74ee1dbf47c449bc75750c8167cf, type: 3}
+    - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
+      propertyPath: _collectibleArray.Array.data[0]
+      value: 
+      objectReference: {fileID: 671314684324316685, guid: 178f64b580a7dae47b32ec1fee7e6817, type: 3}
     - target: {fileID: 3683176725846935287, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: m_Name
       value: SpawnManager

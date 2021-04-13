@@ -7,10 +7,10 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField]
     private GameObject _enemyPrefab;
-    //[SerializeField]
-    //private GameObject _tripleShotPowerupPrefab;
     [SerializeField]
-    private GameObject[] _powerupsArr;
+    private GameObject[] _powerupsArray;
+    [SerializeField]
+    private GameObject[] _collectibleArray;
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
@@ -24,6 +24,7 @@ public class SpawnManager : MonoBehaviour
     {
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerUpRoutine());
+        StartCoroutine(SpawnCollectibleRoutine());
     }
 
     //spawn enemy every 5 seconds
@@ -48,7 +49,17 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(3f, 7f));
             Vector3 powerUpSpawnPos = new Vector3(Random.Range(-9f, 9f), 7.3f, 0);
             int powerupToSpawn = Random.Range(0, 3);
-            Instantiate(_powerupsArr[powerupToSpawn], powerUpSpawnPos, Quaternion.identity);
+            Instantiate(_powerupsArray[powerupToSpawn], powerUpSpawnPos, Quaternion.identity);
+        }
+    }
+
+    IEnumerator SpawnCollectibleRoutine()
+    {
+        while (!_isPlayerDead)
+        {
+            yield return new WaitForSeconds(Random.Range(3f, 6f));
+            Vector3 pickupSpawnPos = new Vector3(Random.Range(-9f, 9f), 7.3f, 0);
+            Instantiate(_collectibleArray[0], pickupSpawnPos, Quaternion.identity);
         }
     }
 
