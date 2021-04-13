@@ -237,6 +237,25 @@ public class Player : MonoBehaviour
         _uiManager.UpdateAmmo(_ammo);
     }
 
+    //Phase 1:Framework -- Health Collectible
+    public void RefillHealth()
+    {
+        playPowerupPickupClip();
+        if(_lives < 3)
+        {
+            _lives++;
+            if(_lives == 2)
+            {
+                _rightWingDamage.SetActive(false);
+            }
+            else if(_lives == 3)
+            {
+                _leftWingDamage.SetActive(false);
+            }
+            _uiManager.UpdateLives(_lives);
+        }
+    }
+
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5f);

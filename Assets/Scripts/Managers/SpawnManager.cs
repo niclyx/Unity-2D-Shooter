@@ -59,7 +59,8 @@ public class SpawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(3f, 6f));
             Vector3 pickupSpawnPos = new Vector3(Random.Range(-9f, 9f), 7.3f, 0);
-            Instantiate(_collectibleArray[0], pickupSpawnPos, Quaternion.identity);
+            int collectibleToSpawn = Random.Range(0, 2);
+            Instantiate(_collectibleArray[collectibleToSpawn], pickupSpawnPos, Quaternion.identity);
         }
     }
 

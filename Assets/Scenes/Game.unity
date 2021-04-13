@@ -2034,7 +2034,7 @@ PrefabInstance:
       objectReference: {fileID: 2856137807138462716, guid: 03dc74ee1dbf47c449bc75750c8167cf, type: 3}
     - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: _collectibleArray.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: _powerupsArray.Array.data[0]
@@ -2051,7 +2051,11 @@ PrefabInstance:
     - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: _collectibleArray.Array.data[0]
       value: 
-      objectReference: {fileID: 671314684324316685, guid: 178f64b580a7dae47b32ec1fee7e6817, type: 3}
+      objectReference: {fileID: 671314684324316685, guid: 7bd8b7695a14427499285a5e399fbd0e, type: 3}
+    - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
+      propertyPath: _collectibleArray.Array.data[1]
+      value: 
+      objectReference: {fileID: 4000397387770945320, guid: 135fd531eb51ef442a8a0f188c57dad0, type: 3}
     - target: {fileID: 3683176725846935287, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: m_Name
       value: SpawnManager

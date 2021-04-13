@@ -27,6 +27,10 @@ public class Collectible : MonoBehaviour
             {
                player.RefillAmmo();
             }
+            else if(_collectibleID == 1)
+            {
+                player.RefillHealth();
+            }
             Destroy(this.gameObject);
         }
     }
