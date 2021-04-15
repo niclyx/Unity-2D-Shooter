@@ -17,9 +17,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _restartText;
     [SerializeField]
+    private Image _fuelBar;
+    [SerializeField]
     private Sprite[] _livesSprite;
 
     private GameManager _gameManager;
+    private float fullFuel = 100f;
+
     [Tooltip("Score: ")]
     private string _baseScoreText = "Score: ";
 
@@ -46,7 +50,7 @@ public class UIManager : MonoBehaviour
     public void UpdateLives(int livesLeft)
     {
         _livesDisplayImage.sprite = _livesSprite[livesLeft];
-        if(livesLeft==0)
+        if (livesLeft == 0)
         {
             GameOverSequence();
         }
@@ -55,6 +59,11 @@ public class UIManager : MonoBehaviour
     public void UpdateAmmo(int ammoRemaining)
     {
         _ammoCountText.text = "Ammo: " + ammoRemaining + "/15";
+    }
+
+    public void UpdateFuel(float fuel)
+    {
+        _fuelBar.transform.localScale = new Vector3(fuel / fullFuel, 1f, 1f);
     }
 
     void GameOverSequence()

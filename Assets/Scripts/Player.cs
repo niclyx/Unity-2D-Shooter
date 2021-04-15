@@ -41,6 +41,8 @@ public class Player : MonoBehaviour
     private AudioClip _powerupPickupClip;
     [SerializeField]
     private int _score;
+    private float _fuel = 100f;
+    private bool canUseThrusters = true;
 
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
@@ -90,6 +92,12 @@ public class Player : MonoBehaviour
     {
         CalculateMovement();
 
+        if (_fuel < 100f && canUseThrusters)
+        {
+            _fuel += 0.05f;
+            _uiManager.UpdateFuel(_fuel);
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammo > 0)
         {
             FireLaser();
@@ -108,11 +116,19 @@ public class Player : MonoBehaviour
         }
 
         //Phase I:Framework - Thrusters
-        if(Input.GetKey(KeyCode.LeftShift))
+        if(Input.GetKey(KeyCode.LeftShift) && _fuel>0 && canUseThrusters)
         {
             transform.Translate(direction * (_speed + 5f) * Time.deltaTime);
+            _fuel -= 0.5f;
+            _uiManager.UpdateFuel(_fuel);
+            if(_fuel <= 0)
+            {
+                _uiManager.UpdateFuel(0);
+                canUseThrusters = false;
+                StartCoroutine(RefuelCoroutine());
+            }
         }
-
+        
         transform.Translate(direction * _speed * Time.deltaTime);
 
         /// Movement restrictions/special
@@ -287,4 +303,20 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5f);
         _is360LaserPowerupActive = false;
     }
+
+    //Phase 1:Framework -- Thruster: Scaling Bar HUD
+    IEnumerator RefuelCoroutine()
+    {
+        Debug.Log("Start refuel coroutine");
+        yield return new WaitForSeconds(3f);
+        while (_fuel <= 100f)
+        {
+            _fuel += 0.5f;
+            _uiManager.UpdateFuel(_fuel);
+            yield return null;
+        }
+
+        canUseThrusters = true;
+    }
+
 }
