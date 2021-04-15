@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _360LaserPrefab;
+    [SerializeField]
     private Vector3 _laserOffset = new Vector3(0, 1f, 0);
     [SerializeField]
     private float _rateOfFire = 0.1f;
@@ -27,6 +29,7 @@ public class Player : MonoBehaviour
     private bool _isTripleShotActive;
     private bool _isSpeedPowerupActive;
     private bool _isShieldPowerupActive;
+    private bool _is360LaserPowerupActive;
 
     [SerializeField]
     private GameObject _shieldVisual;
@@ -133,6 +136,10 @@ public class Player : MonoBehaviour
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
         }
+        else if (_is360LaserPowerupActive)
+        {
+            Instantiate(_360LaserPrefab, transform.position, Quaternion.identity);
+        }
         else
         {
             Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
@@ -230,6 +237,13 @@ public class Player : MonoBehaviour
         _shieldVisual.SetActive(true);
     }
 
+    public void UltimateLaserPowerupActivate()
+    {
+        playPowerupPickupClip();
+        _is360LaserPowerupActive = true;
+        StartCoroutine(UltimateLaserPowerDownRoutine());
+    }
+
     public void RefillAmmo()
     {
         playPowerupPickupClip();
@@ -266,6 +280,11 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
         _isSpeedPowerupActive = false;
+    }
 
+    IEnumerator UltimateLaserPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5f);
+        _is360LaserPowerupActive = false;
     }
 }

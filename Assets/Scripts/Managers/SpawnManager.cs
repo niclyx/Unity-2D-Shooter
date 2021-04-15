@@ -25,9 +25,9 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerUpRoutine());
         StartCoroutine(SpawnCollectibleRoutine());
+        StartCoroutine(SpawnUltimateLaserRoutine());
     }
 
-    //spawn enemy every 5 seconds
     IEnumerator SpawnEnemyRoutine()
     {
         yield return new WaitForSeconds(2f);
@@ -61,6 +61,17 @@ public class SpawnManager : MonoBehaviour
             Vector3 pickupSpawnPos = new Vector3(Random.Range(-9f, 9f), 7.3f, 0);
             int collectibleToSpawn = Random.Range(0, 2);
             Instantiate(_collectibleArray[collectibleToSpawn], pickupSpawnPos, Quaternion.identity);
+        }
+    }
+
+    //Phase 1:Framework -- Secondary Fire Powerup
+    IEnumerator SpawnUltimateLaserRoutine()
+    {
+        while (!_isPlayerDead)
+        {
+            yield return new WaitForSeconds(Random.Range(30f, 45f));
+            Vector3 powerUpSpawnPos = new Vector3(Random.Range(-9f, 9f), 7.3f, 0);
+            Instantiate(_powerupsArray[3], powerUpSpawnPos, Quaternion.identity);
         }
     }
 
