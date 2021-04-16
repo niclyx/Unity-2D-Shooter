@@ -199,6 +199,7 @@ public class Player : MonoBehaviour
         }
 
         _lives--;
+        StartCoroutine(_uiManager.CameraShakeRoutine());
         if (_lives == 2)
         {
             _leftWingDamage.SetActive(true);

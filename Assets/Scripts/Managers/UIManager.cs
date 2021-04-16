@@ -21,8 +21,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Sprite[] _livesSprite;
 
+    private GameObject _camera;
+
     private GameManager _gameManager;
     private float fullFuel = 100f;
+    private Vector3 _cameraOriginalPos;
 
     [Tooltip("Score: ")]
     private string _baseScoreText = "Score: ";
@@ -39,6 +42,15 @@ public class UIManager : MonoBehaviour
         if (_gameManager == null)
         {
             Debug.LogError("Game Manager is NULL");
+        }
+        _camera = GameObject.Find("Main Camera");
+        if (_camera == null)
+        {
+            Debug.LogError("Main Camera is NULL");
+        }
+        else
+        {
+            _cameraOriginalPos = _camera.transform.position;
         }
     }
 
@@ -68,6 +80,7 @@ public class UIManager : MonoBehaviour
 
     void GameOverSequence()
     {
+        _camera.transform.position = _cameraOriginalPos;
         _gameManager.GameOver();
         _restartText.gameObject.SetActive(true);
         StartCoroutine(GameOverFlickerRoutine());
@@ -83,5 +96,23 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.75f);
             _gameOverText.enabled = true;
         }
+    }
+
+    //Phase 1:Framework -- Camera Shake
+    public IEnumerator CameraShakeRoutine()
+    {
+        float duration = 0.5f;
+        float elapsed = 0f;
+
+        while(elapsed < duration)
+        {
+            float x = Random.Range(-0.5f, 0.5f);
+            float y = Random.Range(0.5f, 1.5f);
+            _camera.transform.position = new Vector3(x, y, -10f);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        _camera.transform.position = _cameraOriginalPos;
     }
 }
