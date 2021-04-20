@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
     private float _speed = 4f;
 
     private float yMin = -6f;
+    private float _xMax = 9.6f;
+    private float _xMin = -9.6f;
 
     private Player _player;
     private Animator _animator;
@@ -16,6 +18,12 @@ public class Enemy : MonoBehaviour
     private float _canFire = -1f;
     private float _fireDelay;
     private bool _isDead;
+    private int _randomizer;
+    private Vector3 _direction;
+    [SerializeField]
+    private Vector3 _directionPositive;
+    [SerializeField]
+    private Vector3 _directionNegative;
 
     [SerializeField]
     private GameObject _laserPrefab;
@@ -38,6 +46,10 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Enemy Animator is NULL");
         }
+
+        _directionPositive = new Vector3(1f, -0.1f, 0);
+        _directionNegative = new Vector3(-1f, -0.1f, 0);
+        _direction = _directionPositive;
     }
 
     void Update()
@@ -59,11 +71,21 @@ public class Enemy : MonoBehaviour
 
     void EnemyMovement()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        transform.Translate(_direction * _speed * Time.deltaTime);
+
+        if(transform.position.x > _xMax)
+        {
+            _direction = _directionNegative;
+        }
+        else if(transform.position.x < _xMin)
+        {
+            _direction = _directionPositive;
+        }
+
         if (transform.position.y <= yMin)
         {
-            float randomX = Random.Range(-9.6f, 9.6f);
-            transform.position = new Vector3(randomX, 7.3f, 0);
+            //float randomX = Random.Range(-9.6f, 9.6f);
+            transform.position = new Vector3(transform.position.x, 7.3f, 0);
         }
     }
 
