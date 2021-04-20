@@ -20,13 +20,15 @@ public class Enemy : MonoBehaviour
     private bool _isDead;
     private int _randomizer;
     private Vector3 _direction;
-    [SerializeField]
     private Vector3 _directionPositive;
-    [SerializeField]
     private Vector3 _directionNegative;
+    private bool _shieldActive;
 
     [SerializeField]
     private GameObject _laserPrefab;
+    [SerializeField]
+    private GameObject _shield;
+
     void Start()
     {
         //Cache to reduce get component calls
@@ -50,6 +52,13 @@ public class Enemy : MonoBehaviour
         _directionPositive = new Vector3(1f, -0.1f, 0);
         _directionNegative = new Vector3(-1f, -0.1f, 0);
         _direction = _directionPositive;
+
+        int randomizer = Random.Range(1, 5);
+        if(randomizer == 1)
+        {
+            _shieldActive = true;
+            _shield.SetActive(true);
+        }
     }
 
     void Update()
@@ -93,6 +102,12 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (_shieldActive)
+            {
+                _shieldActive = false;
+                _shield.SetActive(false);
+                return;
+            }
             if (_player != null)
             {
                 _player.Damage();
@@ -107,6 +122,13 @@ public class Enemy : MonoBehaviour
         }
         else if (other.CompareTag("Laser"))
         {
+            if (_shieldActive)
+            {
+                _shieldActive = false;
+                _shield.SetActive(false);
+                return;
+            }
+
             Destroy(other.gameObject);
             if (_player != null)
             {
