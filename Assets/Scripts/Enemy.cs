@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     private Animator _animator;
     private Collider2D _collider;
     private AudioManager _audioManager;
+    private SpawnManager _spawnManager;
     private float _canFire = -1f;
     private float _fireDelay;
     private bool _isDead;
@@ -42,7 +43,11 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Audio Manager is NULL.");
         }
-
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        if (_spawnManager == null)
+        {
+            Debug.LogError("Spawn Manager is NULL.");
+        }
         _animator = GetComponent<Animator>();
         if (_animator == null)
         {
@@ -117,6 +122,7 @@ public class Enemy : MonoBehaviour
             _audioManager.PlayExplosion();
             _speed = 0;
             _isDead = true;
+            _spawnManager.DecrementEnemyCount();
             Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.4f);
         }
@@ -138,6 +144,7 @@ public class Enemy : MonoBehaviour
             _audioManager.PlayExplosion();
             _speed = 0;
             _isDead = true;
+            _spawnManager.DecrementEnemyCount();
             Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.4f);
         }

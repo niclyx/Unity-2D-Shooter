@@ -14,30 +14,47 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
-    private float _spawnRate = 2f;
+    private float _spawnRate = 3f;
+
+    private int _enemiesToSpawn = 3;
+    private int _enemiesLeft;
+    private int _wave = 1;
+    private UIManager _uiManager;
 
     //public bool startSpawn = false;
 
     private bool _isPlayerDead = false;
 
+    private void Start()
+    {
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_uiManager == null)
+        {
+            Debug.LogError("UI Manager is NULL.");
+        }
+    }
     public void StartSpawning()
     {
-        StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnEnemyRoutine(_enemiesToSpawn));
         StartCoroutine(SpawnPowerUpRoutine());
         StartCoroutine(SpawnCollectibleRoutine());
         StartCoroutine(SpawnUltimateLaserRoutine());
     }
 
-    IEnumerator SpawnEnemyRoutine()
+    IEnumerator SpawnEnemyRoutine(int amountToSpawn)
     {
-        yield return new WaitForSeconds(2f);
-        while(!_isPlayerDead)
+        _uiManager.StartWaveTextRoutine(_wave);
+        yield return new WaitForSeconds(3f);
+        Debug.Log("Start spawning " + amountToSpawn + " enemies");
+        _enemiesLeft = amountToSpawn;
+        
+        while(!_isPlayerDead && amountToSpawn > 0)
         {
-            Vector3 spawnPositions = new Vector3(Random.Range(-9.6f, 9.6f), 7.3f, 0);
+            Vector3 spawnPositions = new Vector3(Random.Range(-9.6f, 9.6f), 7f, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab, spawnPositions, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
+            amountToSpawn--;
             yield return new WaitForSeconds(_spawnRate);
-
         }
     }
 
@@ -80,5 +97,16 @@ public class SpawnManager : MonoBehaviour
         _isPlayerDead = true;
     }
 
-   
+    public void DecrementEnemyCount()
+    {
+        _enemiesLeft--;
+        if (_enemiesLeft == 0 && _wave < 3)
+        {
+            _wave++;
+            _enemiesToSpawn += 3;
+            StartCoroutine(SpawnEnemyRoutine(_enemiesToSpawn));
+        }
+    }
+
+
 }

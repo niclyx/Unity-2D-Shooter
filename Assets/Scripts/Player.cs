@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     private float _rateOfFire = 0.1f;
     private float _canFire = -1f;
     private int _shieldsLeft;
+    [SerializeField]
     private int _ammo = 15;
 
     private float yMax = 6f;

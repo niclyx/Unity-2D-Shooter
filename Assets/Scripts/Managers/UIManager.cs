@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _restartText;
     [SerializeField]
+    private Text _waveText;
+    [SerializeField]
     private Image _fuelBar;
     [SerializeField]
     private Sprite[] _livesSprite;
@@ -76,6 +78,20 @@ public class UIManager : MonoBehaviour
     public void UpdateFuel(float fuel)
     {
         _fuelBar.transform.localScale = new Vector3(fuel / fullFuel, 1f, 1f);
+    }
+
+    public void StartWaveTextRoutine(int wave)
+    {
+        StartCoroutine(DisplayWaveRoutine(wave));
+    }
+
+    IEnumerator DisplayWaveRoutine(int wave)
+    {
+        _waveText.gameObject.SetActive(true);
+        _waveText.text = "Wave " + wave;
+        yield return new WaitForSeconds(3f);
+        _waveText.gameObject.SetActive(false);
+
     }
 
     void GameOverSequence()
