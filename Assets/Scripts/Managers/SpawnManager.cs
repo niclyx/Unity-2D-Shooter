@@ -39,6 +39,7 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnPowerUpRoutine());
         StartCoroutine(SpawnCollectibleRoutine());
         StartCoroutine(SpawnUltimateLaserRoutine());
+        StartCoroutine(SpawnDebuffRoutine());
     }
 
     IEnumerator SpawnEnemyRoutine(int amountToSpawn)
@@ -78,6 +79,16 @@ public class SpawnManager : MonoBehaviour
             Vector3 pickupSpawnPos = new Vector3(Random.Range(-9f, 9f), 7.3f, 0);
             int collectibleToSpawn = Random.Range(0, 2);
             Instantiate(_collectibleArray[collectibleToSpawn], pickupSpawnPos, Quaternion.identity);
+        }
+    }
+
+    IEnumerator SpawnDebuffRoutine()
+    {
+        while (!_isPlayerDead)
+        {
+            yield return new WaitForSeconds(Random.Range(15f, 30f));
+            Vector3 pickupSpawnPos = new Vector3(Random.Range(-9f, 9f), 7.3f, 0);
+            Instantiate(_powerupsArray[4], pickupSpawnPos, Quaternion.identity);
         }
     }
 

@@ -1814,8 +1814,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -90}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 122.636505, y: -90}
+  m_SizeDelta: {x: 205.273, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1841084900
 MonoBehaviour:
@@ -1850,7 +1850,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Ammo:'
+  m_Text: 'Ammo: '
 --- !u!222 &1841084901
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2129,6 +2129,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2515536086155343114, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2515536086155343115, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -2268,7 +2272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: _powerupsArray.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: _powerupsArr.Array.data[0]
@@ -2302,6 +2306,14 @@ PrefabInstance:
       propertyPath: _powerupsArray.Array.data[3]
       value: 
       objectReference: {fileID: 3210505215790700903, guid: 6e97249672caa594cbaeeec3d18ee229, type: 3}
+    - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
+      propertyPath: _powerupsArray.Array.data[4]
+      value: 
+      objectReference: {fileID: 5210016157436133196, guid: 34f42fa3675c52b4580a856837da4569, type: 3}
+    - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
+      propertyPath: _powerupsArray.Array.data[5]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: _collectibleArray.Array.data[0]
       value: 

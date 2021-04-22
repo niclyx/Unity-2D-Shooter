@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _rateOfFire = 0.1f;
     private float _canFire = -1f;
+    private bool _fireLocked;
     private int _shieldsLeft;
     [SerializeField]
     private int _ammo = 15;
@@ -99,7 +100,7 @@ public class Player : MonoBehaviour
             _uiManager.UpdateFuel(_fuel);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammo > 0)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammo > 0 && !_fireLocked)
         {
             FireLaser();
         }
@@ -165,6 +166,11 @@ public class Player : MonoBehaviour
         if (_audio.clip != _fireLaserClip)
         {
             _audio.clip = _fireLaserClip;
+            if (_audio.pitch != 1f)
+            {
+                _audio.pitch = 1f;
+                _audio.time = 0;
+            }
         }
         _audio.Play();
 
@@ -228,7 +234,20 @@ public class Player : MonoBehaviour
 
     void playPowerupPickupClip()
     {
+        if (_audio.pitch != 1f)
+        {
+            _audio.pitch = 1f;
+            _audio.time = 0;
+        }
         _audio.clip = _powerupPickupClip;
+        _audio.Play();
+    }
+
+    void playDebuffPickupClip()
+    {
+        _audio.clip = _powerupPickupClip;
+        _audio.time = _audio.clip.length - 0.01f;
+        _audio.pitch = -1f;
         _audio.Play();
     }
 
@@ -260,6 +279,12 @@ public class Player : MonoBehaviour
         playPowerupPickupClip();
         _is360LaserPowerupActive = true;
         StartCoroutine(UltimateLaserPowerDownRoutine());
+    }
+
+    public void DebuffTriggerJamActivate()
+    {
+        playDebuffPickupClip();
+        StartCoroutine(DebuffTriggerJamRoutine());
     }
 
     public void RefillAmmo()
@@ -319,6 +344,15 @@ public class Player : MonoBehaviour
         }
 
         canUseThrusters = true;
+    }
+
+    IEnumerator DebuffTriggerJamRoutine()
+    {
+        _fireLocked = true;
+        _uiManager.TriggerJamActive();
+        yield return new WaitForSeconds(5f);
+        _fireLocked = false;
+        _uiManager.UpdateAmmo(_ammo);
     }
 
 }

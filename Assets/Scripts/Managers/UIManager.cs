@@ -75,6 +75,11 @@ public class UIManager : MonoBehaviour
         _ammoCountText.text = "Ammo: " + ammoRemaining + "/15";
     }
 
+    public void TriggerJamActive()
+    {
+        _ammoCountText.text = "Ammo: JAMMED";
+    }
+
     public void UpdateFuel(float fuel)
     {
         _fuelBar.transform.localScale = new Vector3(fuel / fullFuel, 1f, 1f);

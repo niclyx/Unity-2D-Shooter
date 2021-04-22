@@ -6,7 +6,7 @@ public class Powerup : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 3.0f;
-    [SerializeField] // 0=Triple shot, 1=Speed, 2=Shield, 3=360 Laser
+    [SerializeField] // 0=Triple shot, 1=Speed, 2=Shield, 3=360 Laser, 4=Fire Lock
     private int _powerupID;
 
     void Update()
@@ -39,6 +39,9 @@ public class Powerup : MonoBehaviour
                         break;
                     case 3:
                         player.UltimateLaserPowerupActivate();
+                        break;
+                    case 4:
+                        player.DebuffTriggerJamActivate();
                         break;
                     default:
                         Debug.Log("DEFAULT");
