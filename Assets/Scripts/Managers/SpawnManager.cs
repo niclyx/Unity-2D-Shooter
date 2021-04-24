@@ -6,7 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject _enemyPrefab;
+    private GameObject[] _enemyPrefab;
     [SerializeField]
     private GameObject[] _powerupsArray;
     [SerializeField]
@@ -52,7 +52,8 @@ public class SpawnManager : MonoBehaviour
         while(!_isPlayerDead && amountToSpawn > 0)
         {
             Vector3 spawnPositions = new Vector3(Random.Range(-9.6f, 9.6f), 7f, 0);
-            GameObject newEnemy = Instantiate(_enemyPrefab, spawnPositions, Quaternion.identity);
+            int enemyToSpawn = Random.Range(0, 2);
+            GameObject newEnemy = Instantiate(_enemyPrefab[enemyToSpawn], spawnPositions, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
             amountToSpawn--;
             yield return new WaitForSeconds(_spawnRate);

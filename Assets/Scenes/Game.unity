@@ -2155,11 +2155,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2515536086155343115, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.00002771616
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2515536086155343115, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0065830084
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2515536086155343115, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2251,6 +2251,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
+      propertyPath: _enemyPrefab
+      value: 
+      objectReference: {fileID: 8068206100163772879, guid: 8e39e30b3bea0714186ed76cd338b889, type: 3}
+    - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: _tripleShotPrefab
       value: 
       objectReference: {fileID: 6400724912754272374, guid: 1f54a1da04a7df245b0d4b9f034541d7, type: 3}
@@ -2274,6 +2278,14 @@ PrefabInstance:
       propertyPath: _powerupsArray.Array.size
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
+      propertyPath: _enemyPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 8068206100163772879, guid: 8e39e30b3bea0714186ed76cd338b889, type: 3}
+    - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
+      propertyPath: _enemyPrefab.Array.data[1]
+      value: 
+      objectReference: {fileID: 7751996690882143360, guid: b882903657101dd4288f912f57e8b7bd, type: 3}
     - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: _powerupsArr.Array.data[0]
       value: 

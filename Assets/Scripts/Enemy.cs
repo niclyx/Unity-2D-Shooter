@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
+    private int _enemyID; //0=basic,1=rammer
+    [SerializeField]
     private float _speed = 4f;
 
     private float yMin = -6f;
@@ -28,7 +30,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
-    private GameObject _shield;
+    private GameObject _shield =null;
 
     void Start()
     {
@@ -59,7 +61,7 @@ public class Enemy : MonoBehaviour
         _direction = _directionPositive;
 
         int randomizer = Random.Range(1, 5);
-        if(randomizer == 1)
+        if(randomizer == 1 && _enemyID==0)
         {
             _shieldActive = true;
             _shield.SetActive(true);
@@ -68,22 +70,54 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        EnemyMovement();
+        switch (_enemyID)
+        {
+            case 0:
+                EnemyMovementSideToSide();
+                FireLaser();
+                break;
+            case 1:
+                EnemyMovementStraight();
+                if (Vector3.Distance(transform.position, _player.transform.position) < 3f)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _speed * Time.deltaTime);
+                }
+                break;
+            default:
+                EnemyMovementStraight();
+                break;
+        }
+        
 
-        if(Time.time > _canFire && !_isDead)
+
+    }
+
+    void FireLaser()
+    {
+        if (Time.time > _canFire && !_isDead)
         {
             _fireDelay = Random.Range(3f, 7f);
             _canFire = Time.time + _fireDelay;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-            foreach(Laser l in lasers)
+            foreach (Laser l in lasers)
             {
                 l.AssignEnemyLaser();
             }
         }
     }
 
-    void EnemyMovement()
+    void EnemyMovementStraight()
+    {
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        if (transform.position.y <= yMin)
+        {
+            float randomX = Random.Range(-9.6f, 9.6f);
+            transform.position = new Vector3(randomX, 7.3f, 0);
+        }
+    }
+
+    void EnemyMovementSideToSide()
     {
         transform.Translate(_direction * _speed * Time.deltaTime);
 
@@ -101,6 +135,10 @@ public class Enemy : MonoBehaviour
             //float randomX = Random.Range(-9.6f, 9.6f);
             transform.position = new Vector3(transform.position.x, 7.3f, 0);
         }
+
+
+
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -118,6 +156,7 @@ public class Enemy : MonoBehaviour
                 _player.Damage();
                 _player.AddScore(10);
             }
+
             _animator.SetTrigger("OnEnemyDeath");
             _audioManager.PlayExplosion();
             _speed = 0;
