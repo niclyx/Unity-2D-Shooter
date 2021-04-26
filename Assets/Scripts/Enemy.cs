@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private int _enemyID; //0=basic,1=rammer
+    private int _enemyID; //0=basic,1=rammer,2=fire backwards
     [SerializeField]
     private float _speed = 4f;
 
@@ -73,6 +73,7 @@ public class Enemy : MonoBehaviour
         switch (_enemyID)
         {
             case 0:
+            case 2:
                 EnemyMovementSideToSide();
                 FireLaser();
                 break;
@@ -83,6 +84,10 @@ public class Enemy : MonoBehaviour
                     transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _speed * Time.deltaTime);
                 }
                 break;
+            /*case 2:
+                EnemyMovementSideToSide();
+                FireLaser();
+                break;*/
             default:
                 EnemyMovementStraight();
                 break;
@@ -100,12 +105,18 @@ public class Enemy : MonoBehaviour
             _canFire = Time.time + _fireDelay;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+            
             foreach (Laser l in lasers)
             {
                 l.AssignEnemyLaser();
+                if(_enemyID==2 && transform.position.y < _player.transform.position.y)
+                {
+                    l.IsEnemyReverseShot();
+                }
             }
         }
     }
+
 
     void EnemyMovementStraight()
     {
@@ -156,14 +167,7 @@ public class Enemy : MonoBehaviour
                 _player.Damage();
                 _player.AddScore(10);
             }
-
-            _animator.SetTrigger("OnEnemyDeath");
-            _audioManager.PlayExplosion();
-            _speed = 0;
-            _isDead = true;
-            _spawnManager.DecrementEnemyCount();
-            Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 2.4f);
+            PostDeathSequence();
         }
         else if (other.CompareTag("Laser"))
         {
@@ -179,13 +183,18 @@ public class Enemy : MonoBehaviour
             {
                 _player.AddScore(10);
             }
-            _animator.SetTrigger("OnEnemyDeath");
-            _audioManager.PlayExplosion();
-            _speed = 0;
-            _isDead = true;
-            _spawnManager.DecrementEnemyCount();
-            Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 2.4f);
+            PostDeathSequence();
         }
+    }
+
+    void PostDeathSequence()
+    {
+        _animator.SetTrigger("OnEnemyDeath");
+        _audioManager.PlayExplosion();
+        _speed = 0;
+        _isDead = true;
+        _spawnManager.DecrementEnemyCount();
+        Destroy(GetComponent<Collider2D>());
+        Destroy(this.gameObject, 2.4f);
     }
 }
