@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _rateOfFire = 0.1f;
     private float _canFire = -1f;
+    private float _rateOfPickup = 5f;
+    private float _canPickup = -1f;
     private bool _fireLocked;
     private int _shieldsLeft;
     [SerializeField]
@@ -53,7 +55,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer _shieldSprite;
     private AudioSource _audio;
 
-    
+
 
     void Start()
     {
@@ -73,7 +75,7 @@ public class Player : MonoBehaviour
             Debug.LogError("Audio Manager is NULL.");
         }
         _shieldSprite = _shieldVisual.GetComponent<SpriteRenderer>();
-        if(_shieldSprite == null)
+        if (_shieldSprite == null)
         {
             Debug.LogError("Shield sprite renderer is NULL");
         }
@@ -104,6 +106,16 @@ public class Player : MonoBehaviour
         {
             FireLaser();
         }
+
+        if(Time.time > _canPickup)
+        {
+            _uiManager.PickupAvailable();
+        }
+        if (Input.GetKeyDown(KeyCode.C) && Time.time > _canPickup)
+        {
+            _uiManager.PickupUnavailable();
+            CollectPickups();
+        }
     }
 
     void CalculateMovement()
@@ -118,19 +130,19 @@ public class Player : MonoBehaviour
         }
 
         //Phase I:Framework - Thrusters
-        if(Input.GetKey(KeyCode.LeftShift) && _fuel>0 && canUseThrusters)
+        if (Input.GetKey(KeyCode.LeftShift) && _fuel > 0 && canUseThrusters)
         {
             transform.Translate(direction * (_speed + 5f) * Time.deltaTime);
             _fuel -= 0.5f;
             _uiManager.UpdateFuel(_fuel);
-            if(_fuel <= 0)
+            if (_fuel <= 0)
             {
                 _uiManager.UpdateFuel(0);
                 canUseThrusters = false;
                 StartCoroutine(RefuelCoroutine());
             }
         }
-        
+
         transform.Translate(direction * _speed * Time.deltaTime);
 
         /// Movement restrictions/special
@@ -176,6 +188,30 @@ public class Player : MonoBehaviour
 
         _ammo--;
         _uiManager.UpdateAmmo(_ammo);
+    }
+
+    void CollectPickups()
+    {
+        _canPickup = Time.time + _rateOfPickup;
+
+        Collider2D[] pickups = Physics2D.OverlapCircleAll(transform.position, 10f);
+
+        foreach (Collider2D collider in pickups)
+        {
+            if (collider.CompareTag("Powerup") || collider.CompareTag("Collectible"))
+            {
+                if (collider.CompareTag("Powerup"))
+                {
+                    Powerup pickup = collider.GetComponent<Powerup>();
+                    pickup.ActivatePickupCollect();
+                }
+                else
+                {
+                    Collectible pickup = collider.GetComponent<Collectible>();
+                    pickup.ActivatePickupCollect();
+                }
+            }
+        }
     }
 
     public void Damage()

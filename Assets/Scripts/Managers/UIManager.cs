@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _waveText;
     [SerializeField]
+    private Text _pickupText;
+    [SerializeField]
     private Image _fuelBar;
     [SerializeField]
     private Sprite[] _livesSprite;
@@ -39,6 +41,7 @@ public class UIManager : MonoBehaviour
         _livesDisplayImage.sprite = _livesSprite[3];
         _scoreText.text = "Score: " + 0;
         _ammoCountText.text = "Ammo: 15/15";
+        _pickupText.gameObject.SetActive(false);
 
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
         if (_gameManager == null)
@@ -83,6 +86,15 @@ public class UIManager : MonoBehaviour
     public void UpdateFuel(float fuel)
     {
         _fuelBar.transform.localScale = new Vector3(fuel / fullFuel, 1f, 1f);
+    }
+
+    public void PickupAvailable()
+    {
+        _pickupText.gameObject.SetActive(true);
+    }
+    public void PickupUnavailable()
+    {
+        _pickupText.gameObject.SetActive(false);
     }
 
     public void StartWaveTextRoutine(int wave)
