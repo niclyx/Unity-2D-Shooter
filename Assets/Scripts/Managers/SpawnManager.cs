@@ -51,9 +51,20 @@ public class SpawnManager : MonoBehaviour
         
         while(!_isPlayerDead && amountToSpawn > 0)
         {
+            GameObject newEnemy = null;
             Vector3 spawnPositions = new Vector3(Random.Range(-9.6f, 9.6f), 7f, 0);
-            int enemyToSpawn = Random.Range(0, 3);
-            GameObject newEnemy = Instantiate(_enemyPrefab[enemyToSpawn], spawnPositions, Quaternion.identity);
+            int enemyToSpawn = Random.Range(0, 4);
+            switch (enemyToSpawn)
+            {
+                case 0:
+                case 1:
+                case 2:
+                    newEnemy = Instantiate(_enemyPrefab[enemyToSpawn], spawnPositions, Quaternion.identity);
+                    break;
+                case 3:
+                    newEnemy = Instantiate(_enemyPrefab[enemyToSpawn], new Vector3(-11.5f,1.5f,0), Quaternion.identity);
+                    break;
+            }
             newEnemy.transform.parent = _enemyContainer.transform;
             amountToSpawn--;
             yield return new WaitForSeconds(_spawnRate);

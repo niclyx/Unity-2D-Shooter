@@ -5,13 +5,14 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private int _enemyID; //0=basic,1=rammer,2=fire backwards
+    private int _enemyID; //0=basic,1=rammer,2=fire backwards, 3=mini boss
     [SerializeField]
     private float _speed = 4f;
 
     private float yMin = -6f;
     private float _xMax = 9.6f;
     private float _xMin = -9.6f;
+    private Vector3 _laserOffset = new Vector3(0, -2f, 0);
 
     private Player _player;
     private Animator _animator;
@@ -30,7 +31,16 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
+    private GameObject _laserSpecialPrefab;
+    [SerializeField]
     private GameObject _shield =null;
+    [SerializeField]
+    private GameObject _explosionPrefab;
+
+    [SerializeField]
+    private float _amplitude = 2f;
+    [SerializeField]
+    private float _frequency = 2f;
 
     void Start()
     {
@@ -50,16 +60,20 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Spawn Manager is NULL.");
         }
-        _animator = GetComponent<Animator>();
-        if (_animator == null)
+
+        if (_enemyID != 3)
         {
-            Debug.LogError("Enemy Animator is NULL");
+            _animator = GetComponent<Animator>();
+            if (_animator == null)
+            {
+                Debug.LogError("Enemy Animator is NULL");
+            }
         }
 
         _directionPositive = new Vector3(1f, -0.1f, 0);
         _directionNegative = new Vector3(-1f, -0.1f, 0);
         _direction = _directionPositive;
-
+        
         int randomizer = Random.Range(1, 5);
         if(randomizer == 1 && _enemyID==0)
         {
@@ -84,10 +98,10 @@ public class Enemy : MonoBehaviour
                     transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _speed * Time.deltaTime);
                 }
                 break;
-            /*case 2:
-                EnemyMovementSideToSide();
-                FireLaser();
-                break;*/
+            case 3:
+                EnemyMovementWave();
+                FireLaserSpecial();
+                break;
             default:
                 EnemyMovementStraight();
                 break;
@@ -114,6 +128,16 @@ public class Enemy : MonoBehaviour
                     l.IsEnemyReverseShot();
                 }
             }
+        }
+    }
+
+    void FireLaserSpecial()
+    {
+        if (Time.time > _canFire && !_isDead)
+        {
+            _fireDelay = Random.Range(5f, 7f);
+            _canFire = Time.time + _fireDelay;
+            GameObject enemyLaser = Instantiate(_laserSpecialPrefab, transform.position + _laserOffset, Quaternion.identity);
         }
     }
 
@@ -146,10 +170,18 @@ public class Enemy : MonoBehaviour
             //float randomX = Random.Range(-9.6f, 9.6f);
             transform.position = new Vector3(transform.position.x, 7.3f, 0);
         }
+    }
 
-
-
-
+    void EnemyMovementWave()
+    {
+        float x = 1f;
+        float y = Mathf.Sin(Time.time * _frequency) * _amplitude;
+        float z = transform.position.z;
+        transform.Translate(new Vector3(x, y, z) * 2f * Time.deltaTime) ;
+        if (transform.position.x >= 10f)
+        {
+            transform.position = new Vector3(-10f, transform.position.y, 0);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -189,7 +221,14 @@ public class Enemy : MonoBehaviour
 
     void PostDeathSequence()
     {
-        _animator.SetTrigger("OnEnemyDeath");
+        if(_animator!=null) { 
+            _animator.SetTrigger("OnEnemyDeath");
+        }
+        else
+        {
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(GetComponent<SpriteRenderer>());
+        }
         _audioManager.PlayExplosion();
         _speed = 0;
         _isDead = true;

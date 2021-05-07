@@ -68,6 +68,8 @@ public class Laser : MonoBehaviour
         {
             Player player = other.GetComponent<Player>();
             player.Damage();
+            Destroy(this.gameObject);
         }
+        
     }
 }
