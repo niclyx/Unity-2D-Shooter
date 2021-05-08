@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     private float _xMin = -9.6f;
     private Vector3 _laserOffset = new Vector3(0, -2f, 0);
     private Vector3 _raycastDistance = new Vector3(0, -8f, 0);
+    private Vector3 _avoidLaserDistance = new Vector3(0, -2f, 0);
 
     private Player _player;
     private Animator _animator;
@@ -37,10 +38,12 @@ public class Enemy : MonoBehaviour
     private GameObject _shield =null;
     [SerializeField]
     private GameObject _explosionPrefab;
+    [SerializeField]
+    LayerMask _projectileLayerMask;
 
-    [SerializeField]
+    //[SerializeField]
     private float _amplitude = 2f;
-    [SerializeField]
+    //[SerializeField]
     private float _frequency = 2f;
 
     void Start()
@@ -105,6 +108,8 @@ public class Enemy : MonoBehaviour
                 FireLaserSpecial();
                 break;
             case 4:
+                EnemyMovementStraight();
+                RaycastAvoidPlayerFire();
                 break;
             default:
                 EnemyMovementStraight();
@@ -204,6 +209,41 @@ public class Enemy : MonoBehaviour
                 FireLaser();
                 //Debug.Log("shooting pickup");
             }
+        }
+    }
+
+    void RaycastAvoidPlayerFire()
+    {
+        Collider2D other = Physics2D.OverlapCircle(transform.position + new Vector3(0,-1f,0), 0.5f, _projectileLayerMask);
+        if (other!=null && other.CompareTag("Laser"))
+        {
+            int chanceToAvoid = Random.Range(0, 3);
+            //Debug.Log("chance to avoid= " + chanceToAvoid);
+            if (chanceToAvoid == 0)
+            {
+                return;
+            }
+            else
+            {
+                int moveLeftOrRight = Random.Range(0, 2);
+                if (moveLeftOrRight == 0)
+                {
+                    transform.Translate(Vector3.right * 1.5f);
+                    if (transform.position.x > 10f)
+                    {
+                        transform.position = new Vector3(_xMin, transform.position.y, 0);
+                    }
+                }
+                else
+                {
+                    transform.Translate(Vector3.left * 1.5f);
+                    if (transform.position.x < -10f)
+                    {
+                        transform.position = new Vector3(_xMax, transform.position.y, 0);
+                    }
+                }
+            }
+
         }
     }
 

@@ -53,12 +53,13 @@ public class SpawnManager : MonoBehaviour
         {
             GameObject newEnemy = null;
             Vector3 spawnPositions = new Vector3(Random.Range(-9.6f, 9.6f), 7f, 0);
-            int enemyToSpawn = Random.Range(0, 4);
+            int enemyToSpawn = Random.Range(0, 5);
             switch (enemyToSpawn)
             {
                 case 0:
                 case 1:
                 case 2:
+                case 4:
                     newEnemy = Instantiate(_enemyPrefab[enemyToSpawn], spawnPositions, Quaternion.identity);
                     break;
                 case 3:
