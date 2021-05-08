@@ -70,6 +70,19 @@ public class Laser : MonoBehaviour
             player.Damage();
             Destroy(this.gameObject);
         }
-        
+        if ((other.CompareTag("Powerup") || other.CompareTag("Collectible")) && _isEnemyLaser)
+        {
+            if (other.CompareTag("Powerup"))
+            {
+                Powerup pickup = other.GetComponent<Powerup>();
+            }
+            else
+            {
+                Collectible pickup = other.GetComponent<Collectible>();
+            }
+            Destroy(other.gameObject);
+            Destroy(this.gameObject);
+        }
+
     }
 }

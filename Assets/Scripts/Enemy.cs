@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private int _enemyID; //0=basic,1=rammer,2=fire backwards, 3=mini boss
+    private int _enemyID; //0=basic,1=rammer,2=fire backwards, 3=mini boss, 4=avoider
     [SerializeField]
     private float _speed = 4f;
 
@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private float _xMax = 9.6f;
     private float _xMin = -9.6f;
     private Vector3 _laserOffset = new Vector3(0, -2f, 0);
+    private Vector3 _raycastDistance = new Vector3(0, -8f, 0);
 
     private Player _player;
     private Animator _animator;
@@ -88,6 +89,7 @@ public class Enemy : MonoBehaviour
         {
             case 0:
             case 2:
+                RaycastScanForPickups();
                 EnemyMovementSideToSide();
                 FireLaser();
                 break;
@@ -101,6 +103,8 @@ public class Enemy : MonoBehaviour
             case 3:
                 EnemyMovementWave();
                 FireLaserSpecial();
+                break;
+            case 4:
                 break;
             default:
                 EnemyMovementStraight();
@@ -119,9 +123,9 @@ public class Enemy : MonoBehaviour
             _canFire = Time.time + _fireDelay;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-            
             foreach (Laser l in lasers)
             {
+                l.tag = "Enemy_Fire";
                 l.AssignEnemyLaser();
                 if(_enemyID==2 && transform.position.y < _player.transform.position.y)
                 {
@@ -181,6 +185,25 @@ public class Enemy : MonoBehaviour
         if (transform.position.x >= 10f)
         {
             transform.position = new Vector3(-10f, transform.position.y, 0);
+        }
+    }
+
+    void RaycastScanForPickups()
+    {
+        //Debug.DrawLine(transform.position, transform.position + _raycastDistance, Color.green);
+        RaycastHit2D hit = Physics2D.Linecast(transform.position, transform.position + _raycastDistance);
+        if (hit.collider != null)
+        {
+            if (hit.transform.CompareTag("Collectible"))
+            {
+                FireLaser();
+                //Debug.Log("shooting collectible");
+            }
+            else if (hit.transform.CompareTag("Powerup"))
+            {
+                FireLaser();
+                //Debug.Log("shooting pickup");
+            }
         }
     }
 
