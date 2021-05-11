@@ -6,11 +6,13 @@ public class SpawnManager : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject[] _enemyPrefab;
+    private GameObject[] _enemyPrefabs;
     [SerializeField]
-    private GameObject[] _powerupsArray;
+    private GameObject[] _pickupsArrayT1;
     [SerializeField]
-    private GameObject[] _collectibleArray;
+    private GameObject[] _pickupsArrayT2;
+    [SerializeField]
+    private GameObject[] _pickupsArrayT3;
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
@@ -36,10 +38,7 @@ public class SpawnManager : MonoBehaviour
     public void StartSpawning()
     {
         StartCoroutine(SpawnEnemyRoutine(_enemiesToSpawn));
-        StartCoroutine(SpawnPowerUpRoutine());
-        StartCoroutine(SpawnCollectibleRoutine());
-        StartCoroutine(SpawnUltimateLaserRoutine());
-        StartCoroutine(SpawnDebuffRoutine());
+        StartCoroutine(SpawnPickupsRoutine());
     }
 
     IEnumerator SpawnEnemyRoutine(int amountToSpawn)
@@ -53,17 +52,25 @@ public class SpawnManager : MonoBehaviour
         {
             GameObject newEnemy = null;
             Vector3 spawnPositions = new Vector3(Random.Range(-9.6f, 9.6f), 7f, 0);
-            int enemyToSpawn = Random.Range(0, 5);
+            int enemyToSpawn = Random.Range(0, 101);
             switch (enemyToSpawn)
             {
-                case 0:
-                case 1:
-                case 2:
-                case 4:
-                    newEnemy = Instantiate(_enemyPrefab[enemyToSpawn], spawnPositions, Quaternion.identity);
+                case int n when (n >= 0 && n <=40):
+                    newEnemy = Instantiate(_enemyPrefabs[0], spawnPositions, Quaternion.identity);
                     break;
-                case 3:
-                    newEnemy = Instantiate(_enemyPrefab[enemyToSpawn], new Vector3(-11.5f,1.5f,0), Quaternion.identity);
+                case int n when (n >= 41 && n <= 60):
+                    newEnemy = Instantiate(_enemyPrefabs[1], spawnPositions, Quaternion.identity);
+                    break;
+                case int n when (n >= 61 && n <= 80):
+                    newEnemy = Instantiate(_enemyPrefabs[2], spawnPositions, Quaternion.identity);
+                    break;
+                case int n when (n >= 81 && n <= 95):
+                    newEnemy = Instantiate(_enemyPrefabs[3], spawnPositions, Quaternion.identity);
+                    break;
+                case int n when (n >= 96 && n <= 100):
+                    newEnemy = Instantiate(_enemyPrefabs[4], new Vector3(-11.5f,1.5f,0), Quaternion.identity);
+                    break;
+                default:
                     break;
             }
             newEnemy.transform.parent = _enemyContainer.transform;
@@ -72,47 +79,29 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnPowerUpRoutine()
-    {
-        yield return new WaitForSeconds(2f);
-        while (!_isPlayerDead)
-        {
-            yield return new WaitForSeconds(Random.Range(3f, 7f));
-            Vector3 powerUpSpawnPos = new Vector3(Random.Range(-9f, 9f), 7.3f, 0);
-            int powerupToSpawn = Random.Range(0, 3);
-            Instantiate(_powerupsArray[powerupToSpawn], powerUpSpawnPos, Quaternion.identity);
-        }
-    }
-
-    IEnumerator SpawnCollectibleRoutine()
+    IEnumerator SpawnPickupsRoutine()
     {
         while (!_isPlayerDead)
         {
             yield return new WaitForSeconds(Random.Range(3f, 6f));
-            Vector3 pickupSpawnPos = new Vector3(Random.Range(-9f, 9f), 7.3f, 0);
-            int collectibleToSpawn = Random.Range(0, 2);
-            Instantiate(_collectibleArray[collectibleToSpawn], pickupSpawnPos, Quaternion.identity);
-        }
-    }
-
-    IEnumerator SpawnDebuffRoutine()
-    {
-        while (!_isPlayerDead)
-        {
-            yield return new WaitForSeconds(Random.Range(15f, 30f));
-            Vector3 pickupSpawnPos = new Vector3(Random.Range(-9f, 9f), 7.3f, 0);
-            Instantiate(_powerupsArray[4], pickupSpawnPos, Quaternion.identity);
-        }
-    }
-
-    //Phase 1:Framework -- Secondary Fire Powerup
-    IEnumerator SpawnUltimateLaserRoutine()
-    {
-        while (!_isPlayerDead)
-        {
-            yield return new WaitForSeconds(Random.Range(30f, 45f));
-            Vector3 powerUpSpawnPos = new Vector3(Random.Range(-9f, 9f), 7.3f, 0);
-            Instantiate(_powerupsArray[3], powerUpSpawnPos, Quaternion.identity);
+            int pickupGenerator = Random.Range(0, 100); //T1 0 - 70, T2 71 - 90, T3 91 - 99
+            //Debug.Log("Pickup RNG: " + pickupGenerator);
+            Vector3 pickupSpawnLocRange = new Vector3(Random.Range(-9f, 9f), 7.3f, 0);
+            switch (pickupGenerator)
+            {
+                case int n when (n >= 0 && n <= 70):
+                    Instantiate(_pickupsArrayT1[Random.Range(0,4)], pickupSpawnLocRange, Quaternion.identity);
+                    break;
+                case int n when (n >= 71 && n <= 90):
+                    Instantiate(_pickupsArrayT2[Random.Range(0, 2)], pickupSpawnLocRange, Quaternion.identity);
+                    break;
+                case int n when (n >= 91 && n < 100):
+                    //Instantiate(_pickupsArrayT3[Random.Range(0, 2)], pickupSpawnLocRange, Quaternion.identity);
+                    Instantiate(_pickupsArrayT3[0], pickupSpawnLocRange, Quaternion.identity);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
