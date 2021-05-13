@@ -2206,6 +2206,10 @@ PrefabInstance:
       propertyPath: _powerupPickupClip
       value: 
       objectReference: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+    - target: {fileID: 2515536086155343113, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
+      propertyPath: _laserTrackingPrefab
+      value: 
+      objectReference: {fileID: 4963126286765473129, guid: b005de7228bb66a499ffe3a9e6baaf02, type: 3}
     - target: {fileID: 2515536086155343114, guid: 2af8970281327f7499a8918aa36ba60c, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -2405,7 +2409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: _pickupsArrayT3.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: _powerupsArr.Array.data[0]
@@ -2503,6 +2507,10 @@ PrefabInstance:
       propertyPath: _pickupsArrayT3.Array.data[0]
       value: 
       objectReference: {fileID: 5210016157436133196, guid: 34f42fa3675c52b4580a856837da4569, type: 3}
+    - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
+      propertyPath: _pickupsArrayT3.Array.data[1]
+      value: 
+      objectReference: {fileID: 2155068231560370560, guid: 7ff89f3f06905b24a946479e1f6af1e4, type: 3}
     - target: {fileID: 3683176725846935286, guid: 3dc566e72d4730e4ebb811088eeca594, type: 3}
       propertyPath: _collectibleArray.Array.data[0]
       value: 

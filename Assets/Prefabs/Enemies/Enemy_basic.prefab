@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8068206100163772876}
   - component: {fileID: 7165251541549234101}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Enemy_basic
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,9 +48,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0be42f4ec3b6f9b4cbe037faf4c93a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyID: 0
   _speed: 4
   _laserPrefab: {fileID: 8082767892913678216, guid: 350aacc84325b5349a6da52b445bce2d, type: 3}
+  _laserSpecialPrefab: {fileID: 0}
   _shield: {fileID: 8200775354863949189}
+  _explosionPrefab: {fileID: 5801656304384783505, guid: 3a5aa510923a3e649a94f35d3410bcda, type: 3}
+  _projectileLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!50 &8068206100163772882
 Rigidbody2D:
   serializedVersion: 4

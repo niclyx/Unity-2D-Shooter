@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _360LaserPrefab;
     [SerializeField]
+    private GameObject _laserTrackingPrefab;
+    [SerializeField]
     private Vector3 _laserOffset = new Vector3(0, 1f, 0);
     [SerializeField]
     private float _rateOfFire = 0.1f;
@@ -24,6 +26,7 @@ public class Player : MonoBehaviour
     private float _canPickup = -1f;
     private bool _fireLocked;
     private int _shieldsLeft;
+    private int _trackingLasersLeft;
     [SerializeField]
     private int _ammo = 15;
 
@@ -34,6 +37,7 @@ public class Player : MonoBehaviour
     private bool _isSpeedPowerupActive;
     private bool _isShieldPowerupActive;
     private bool _is360LaserPowerupActive;
+    private bool _isLaserTrackingActive;
 
     [SerializeField]
     private GameObject _shieldVisual;
@@ -169,6 +173,16 @@ public class Player : MonoBehaviour
         else if (_is360LaserPowerupActive)
         {
             Instantiate(_360LaserPrefab, transform.position, Quaternion.identity);
+        }
+        else if (_isLaserTrackingActive)
+        {
+            GameObject laser = Instantiate(_laserTrackingPrefab, transform.position + _laserOffset, Quaternion.identity);
+            laser.tag = "Laser";
+            _trackingLasersLeft--;
+            if (_trackingLasersLeft == 0)
+            {
+                _isLaserTrackingActive = false;
+            }
         }
         else
         {
@@ -321,6 +335,12 @@ public class Player : MonoBehaviour
     {
         playDebuffPickupClip();
         StartCoroutine(DebuffTriggerJamRoutine());
+    }
+
+    public void LaserTrackingPowerupActivate()
+    {
+        _isLaserTrackingActive = true;
+        _trackingLasersLeft = 10;
     }
 
     public void RefillAmmo()

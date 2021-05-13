@@ -96,8 +96,7 @@ public class SpawnManager : MonoBehaviour
                     Instantiate(_pickupsArrayT2[Random.Range(0, 2)], pickupSpawnLocRange, Quaternion.identity);
                     break;
                 case int n when (n >= 91 && n < 100):
-                    //Instantiate(_pickupsArrayT3[Random.Range(0, 2)], pickupSpawnLocRange, Quaternion.identity);
-                    Instantiate(_pickupsArrayT3[0], pickupSpawnLocRange, Quaternion.identity);
+                    Instantiate(_pickupsArrayT3[Random.Range(0, 2)], pickupSpawnLocRange, Quaternion.identity);
                     break;
                 default:
                     break;

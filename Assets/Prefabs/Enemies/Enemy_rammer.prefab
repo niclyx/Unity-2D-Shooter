@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7751996690882143360}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.84, y: 4.25, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.5, y: 0.8, z: 0}
   m_Children:
   - {fileID: 3500415879685759967}
   m_Father: {fileID: 0}
@@ -51,7 +51,12 @@ MonoBehaviour:
   _enemyID: 1
   _speed: 4
   _laserPrefab: {fileID: 3323301896288579573, guid: 74eebf70b8bb57747b844eef1c522f83, type: 3}
+  _laserSpecialPrefab: {fileID: 0}
   _shield: {fileID: 8476787029191946442}
+  _explosionPrefab: {fileID: 5801656304384783505, guid: 3a5aa510923a3e649a94f35d3410bcda, type: 3}
+  _projectileLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!50 &7751996690882143389
 Rigidbody2D:
   serializedVersion: 4
@@ -139,8 +144,8 @@ SpriteRenderer:
   m_SortingLayerID: -1883844455
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3154912113cbb4a498df6f571c74e18c, type: 3}
-  m_Color: {r: 0.12220454, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 982d9a908667da643b203e471b8f17a9, type: 3}
+  m_Color: {r: 0.8143469, g: 0.990566, b: 0.7429245, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

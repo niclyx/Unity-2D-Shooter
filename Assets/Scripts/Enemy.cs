@@ -147,6 +147,7 @@ public class Enemy : MonoBehaviour
             _fireDelay = Random.Range(5f, 7f);
             _canFire = Time.time + _fireDelay;
             GameObject enemyLaser = Instantiate(_laserSpecialPrefab, transform.position + _laserOffset, Quaternion.identity);
+            enemyLaser.tag = "Enemy_Fire";
         }
     }
 
@@ -255,6 +256,7 @@ public class Enemy : MonoBehaviour
             {
                 _shieldActive = false;
                 _shield.SetActive(false);
+                _player.Damage();
                 return;
             }
             if (_player != null)
@@ -270,6 +272,7 @@ public class Enemy : MonoBehaviour
             {
                 _shieldActive = false;
                 _shield.SetActive(false);
+                Destroy(other.gameObject);
                 return;
             }
 
@@ -288,10 +291,11 @@ public class Enemy : MonoBehaviour
             _animator.SetTrigger("OnEnemyDeath");
         }
         else
-        {
+        { 
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             Destroy(GetComponent<SpriteRenderer>());
         }
+        gameObject.tag = "Being_Destroyed";
         _audioManager.PlayExplosion();
         _speed = 0;
         _isDead = true;

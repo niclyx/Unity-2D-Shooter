@@ -9,6 +9,7 @@ TagManager:
   - Powerup
   - Collectible
   - Enemy_Fire
+  - Being_Destroyed
   layers:
   - Default
   - TransparentFX

@@ -64,7 +64,8 @@ public class Laser : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Player") && _isEnemyLaser)
+        //if(other.CompareTag("Player") && _isEnemyLaser)
+        if (other.CompareTag("Player") && gameObject.tag=="Enemy_Fire")
         {
             Player player = other.GetComponent<Player>();
             player.Damage();
