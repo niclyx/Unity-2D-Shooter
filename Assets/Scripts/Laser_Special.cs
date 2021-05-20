@@ -19,6 +19,7 @@ public class Laser_Special : MonoBehaviour
             {
                 Debug.LogError("Player not found");
             }
+            StartCoroutine(SelfDestructRoutine());
         }
         else if (gameObject.tag == "Laser")
         {
@@ -80,5 +81,11 @@ public class Laser_Special : MonoBehaviour
             player.Damage();
             Destroy(this.gameObject);
         }
+    }
+
+    IEnumerator SelfDestructRoutine()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(this.gameObject);
     }
 }

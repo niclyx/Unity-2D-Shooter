@@ -15,21 +15,27 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _gameOverText;
     [SerializeField]
+    private Text _victoryText;
+    [SerializeField]
     private Text _restartText;
     [SerializeField]
     private Text _waveText;
     [SerializeField]
     private Text _pickupText;
     [SerializeField]
+    private Text _announceBossText;
+    [SerializeField]
     private Image _fuelBar;
     [SerializeField]
     private Sprite[] _livesSprite;
+
 
     private GameObject _camera;
 
     private GameManager _gameManager;
     private float fullFuel = 100f;
     private Vector3 _cameraOriginalPos;
+    private bool _playerWon;
 
     [Tooltip("Score: ")]
     private string _baseScoreText = "Score: ";
@@ -38,6 +44,8 @@ public class UIManager : MonoBehaviour
     {
         _gameOverText.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
+        _victoryText.gameObject.SetActive(false);
+        _announceBossText.gameObject.SetActive(false);
         _livesDisplayImage.sprite = _livesSprite[3];
         _scoreText.text = "Score: " + 0;
         _ammoCountText.text = "Ammo: 15/15";
@@ -102,16 +110,27 @@ public class UIManager : MonoBehaviour
         StartCoroutine(DisplayWaveRoutine(wave));
     }
 
+    public void StartAnnouceBossRoutine()
+    {
+        StartCoroutine(AnnounceBossRoutine());
+    }
+
     IEnumerator DisplayWaveRoutine(int wave)
     {
         _waveText.gameObject.SetActive(true);
         _waveText.text = "Wave " + wave;
         yield return new WaitForSeconds(3f);
         _waveText.gameObject.SetActive(false);
-
     }
 
-    void GameOverSequence()
+    IEnumerator AnnounceBossRoutine()
+    {
+        _announceBossText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        _announceBossText.gameObject.SetActive(false);
+    }
+
+    public void GameOverSequence()
     {
         _camera.transform.position = _cameraOriginalPos;
         _gameManager.GameOver();
@@ -119,15 +138,35 @@ public class UIManager : MonoBehaviour
         StartCoroutine(GameOverFlickerRoutine());
     }
 
+    public void WinGameOverSequence()
+    {
+        _camera.transform.position = _cameraOriginalPos;
+        _gameManager.GameOver();
+        _playerWon = true;
+        _restartText.gameObject.SetActive(true);
+        StartCoroutine(GameOverFlickerRoutine());
+    }
+
     IEnumerator GameOverFlickerRoutine()
     {
-        while(true)
+        while (true)
         {
-            _gameOverText.gameObject.SetActive(true);
-            yield return new WaitForSeconds(0.75f);
-            _gameOverText.enabled = false;
-            yield return new WaitForSeconds(0.75f);
-            _gameOverText.enabled = true;
+            if (_playerWon)
+            {
+                _victoryText.gameObject.SetActive(true);
+                yield return new WaitForSeconds(0.75f);
+                _victoryText.enabled = false;
+                yield return new WaitForSeconds(0.75f);
+                _victoryText.enabled = true;
+            }
+            else
+            {
+                _gameOverText.gameObject.SetActive(true);
+                yield return new WaitForSeconds(0.75f);
+                _gameOverText.enabled = false;
+                yield return new WaitForSeconds(0.75f);
+                _gameOverText.enabled = true;
+            }
         }
     }
 

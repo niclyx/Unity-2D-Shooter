@@ -14,11 +14,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        
-    }
-
     public void PlayExplosion()
     {
         _audioSourceExplosion.Play();

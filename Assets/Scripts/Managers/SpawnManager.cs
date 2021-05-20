@@ -8,11 +8,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject[] _enemyPrefabs;
     [SerializeField]
-    private GameObject[] _pickupsArrayT1;
+    private GameObject[] _pickupsArrayT1; //0-Shield, 1-Speed,2-Triple Shot,3-Ammo
     [SerializeField]
-    private GameObject[] _pickupsArrayT2;
+    private GameObject[] _pickupsArrayT2;//0-Medkit, 1-360 laser
     [SerializeField]
-    private GameObject[] _pickupsArrayT3;
+    private GameObject[] _pickupsArrayT3;//0-debuff, 1-tracking laser
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
@@ -45,7 +45,7 @@ public class SpawnManager : MonoBehaviour
     {
         _uiManager.StartWaveTextRoutine(_wave);
         yield return new WaitForSeconds(3f);
-        Debug.Log("Start spawning " + amountToSpawn + " enemies");
+        //Debug.Log("Start spawning " + amountToSpawn + " enemies");
         _enemiesLeft = amountToSpawn;
         
         while(!_isPlayerDead && amountToSpawn > 0)
@@ -112,11 +112,19 @@ public class SpawnManager : MonoBehaviour
     public void DecrementEnemyCount()
     {
         _enemiesLeft--;
+        /**/
         if (_enemiesLeft == 0 && _wave < 3)
         {
             _wave++;
             _enemiesToSpawn += 3;
             StartCoroutine(SpawnEnemyRoutine(_enemiesToSpawn));
+        }
+        
+        //if (_enemiesLeft == 0 && _wave == 1) //debug 
+        else if(_enemiesLeft==0 && _wave == 3)
+        {
+            _uiManager.StartAnnouceBossRoutine();
+            Instantiate(_enemyPrefabs[5], new Vector3(0, 10f, 0), Quaternion.identity);
         }
     }
 

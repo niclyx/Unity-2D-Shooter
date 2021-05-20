@@ -57,6 +57,8 @@ public class Player : MonoBehaviour
     private AudioManager _audioManager;
 
     private SpriteRenderer _shieldSprite;
+    private SpriteRenderer _playerSprite;
+    private Color _originalColor;
     private AudioSource _audio;
 
 
@@ -91,6 +93,15 @@ public class Player : MonoBehaviour
         else
         {
             _audio.clip = _fireLaserClip;
+        }
+        _playerSprite = GetComponent<SpriteRenderer>();
+        if (_playerSprite == null)
+        {
+            Debug.LogError("Player SpriteRenderer is NULL.");
+        }
+        else
+        {
+            _originalColor = _playerSprite.color;
         }
 
         transform.position = new Vector3(0, -3, 0);
@@ -237,11 +248,11 @@ public class Player : MonoBehaviour
             switch (_shieldsLeft)
             {
                 case 2:
-                    Debug.Log("2 shields left");
+                    //Debug.Log("2 shields left");
                     _shieldSprite.color = new Color(1f, 1f, 1f, 0.7f);
                     break;
                 case 1:
-                    Debug.Log("1 shields left");
+                    //Debug.Log("1 shields left");
                     _shieldSprite.color = new Color(1f, 1f, 1f, 0.4f);
                     break;
                 case 0:
@@ -339,6 +350,7 @@ public class Player : MonoBehaviour
 
     public void LaserTrackingPowerupActivate()
     {
+        playPowerupPickupClip();
         _isLaserTrackingActive = true;
         _trackingLasersLeft = 10;
     }
@@ -367,6 +379,19 @@ public class Player : MonoBehaviour
             }
             _uiManager.UpdateLives(_lives);
         }
+    }
+
+    public void overlapWithBoss(bool overlap)
+    {
+        if (overlap)
+        {
+            _playerSprite.color = Color.red;
+        }
+        else
+        {
+            _playerSprite.color = _originalColor;
+        }
+
     }
 
     IEnumerator TripleShotPowerDownRoutine()
